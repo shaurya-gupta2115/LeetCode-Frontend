@@ -7,6 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./utils/authSlice";
 import { useEffect } from "react";
 import AdminPanel from "./pages/AdminPanel";
+import ProblemPage from "./pages/ProblemPage";
+import AdminDelete from "./components/AdminDelete";
+import AdminVideo from "./components/AdminVideo";
+import Admin from "./pages/Admin";
+import AdminUpload from "./components/AdminUpload";
 
 function App() {
   // code likhna pdega ki isAuthenticated hai ki nhi like agar authenticated user hai to direct homepage me land kara denge but agar nhi hai to direct signup / login page me land karana hoga
@@ -56,12 +61,53 @@ function App() {
           path="/admin"
           element={
             isAuthenticated && user?.role === "admin" ? (
-              <AdminPanel />
+              <Admin />
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/" />
             )
           }
         />
+        <Route
+          path="/admin/create"
+          element={
+            isAuthenticated && user?.role === "admin" ? (
+              <AdminPanel />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/admin/delete"
+          element={
+            isAuthenticated && user?.role === "admin" ? (
+              <AdminDelete />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />{" "}
+        <Route
+          path="/admin/video"
+          element={
+            isAuthenticated && user?.role === "admin" ? (
+              <AdminVideo />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/admin/upload/:problemId"
+          element={
+            isAuthenticated && user?.role === "admin" ? (
+              <AdminUpload />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route path="/problem/:problemId" element={<ProblemPage />}></Route>
       </Routes>
     </>
   );
